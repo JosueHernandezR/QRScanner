@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+
+import 'package:barcode_scan/barcode_scan.dart';
+
 import 'package:qrscanner/src/pages/direcciones_page.dart';
 import 'package:qrscanner/src/pages/mapas_page.dart';
 
@@ -12,9 +15,32 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('QR Scanner'),
+        actions: <Widget>[
+          IconButton(icon: Icon(Icons.delete_forever), onPressed: () {})
+        ],
+      ),
       body: _callPage(currentIndex),
       bottomNavigationBar: _crearBottomNavigationBar(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.filter_center_focus),
+        onPressed: _scanQR,
+        backgroundColor: Theme.of(context).primaryColor,
+      ),
     );
+  }
+
+  _scanQR() async {
+    dynamic futureString = '';
+
+    try {
+      futureString = await BarcodeScanner.scan();
+    } catch (e) {
+      futureString = e.toString();
+    }
+    print('Future String: ${futureString.toString()}');
   }
 
   Widget _callPage(int paginaActual) {
