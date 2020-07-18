@@ -8,7 +8,7 @@ class ScanModel {
   }) {
     //Ayuda a validar si es de una pagina web
     if (valor.contains('http')) {
-      this.tipo = 'https';
+      this.tipo = 'http';
     }
     //Verifica si es de un tipo geo
     else {

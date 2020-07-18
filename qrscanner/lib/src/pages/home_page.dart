@@ -41,20 +41,18 @@ class _HomePageState extends State<HomePage> {
   }
 
   _scanQR(BuildContext context) async {
-    dynamic futureString = 'https://fernando-herrera.com';
+    dynamic futureString;
 
-    // try {
-    //   futureString = await BarcodeScanner.scan();
-    // } catch (e) {
-    //   futureString = e.toString();
-    // }
-    // print('Future String: ${futureString.rawContent}');
+    try {
+      futureString = await BarcodeScanner.scan();
+    } catch (e) {
+      futureString = e.toString();
+    }
+
     if (futureString != null) {
       final scan = ScanModel(valor: futureString);
       scansBloc.agregarScans(scan);
-      final scan2 =
-          ScanModel(valor: 'geo:40.724233047051705,-74.00731459101564');
-      scansBloc.agregarScans(scan2);
+
       if (Platform.isIOS) {
         Future.delayed(Duration(microseconds: 750), () {
           utils.abrirScan(context, scan);
